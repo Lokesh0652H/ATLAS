@@ -12,7 +12,7 @@
 [![License](https://img.shields.io/badge/License-MIT_/_Academic_Research-lightgrey)](#license-credits-and-references)
 
 > **“Every answer should be traceable to its evidence, every metric should be measurable, and every limitation should be visible.”**  
-> Atlas is an evidence-grounded AI Research & Knowledge Engine built on strict mathematical retrieval, verifiable source citations, multi-model reasoning, automated contradiction detection, reproducible evaluation benchmarks, and live operational observability—presented in an ultra-luxury editorial interface with **zero sidebars**.
+> Atlas is an evidence-grounded AI Research & Knowledge Engine built on strict mathematical retrieval, verifiable source citations, multi-model reasoning, automated contradiction detection, reproducible evaluation benchmarks, and live operational observability—presented 
 
 ---
 
