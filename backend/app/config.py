@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     # Web Search
     WEB_SEARCH_PROVIDER: str = Field(default="duckduckgo")
     WEB_SEARCH_API_KEY: Optional[str] = Field(default=None)
+    TAVILY_API_KEY: Optional[str] = Field(default=None)
 
     model_config = SettingsConfigDict(
         env_file=".env",
