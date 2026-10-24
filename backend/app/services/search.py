@@ -36,9 +36,18 @@ class SearchService:
     def __init__(self, k_rrf: int = 60):
         self.k_rrf = k_rrf
 
-    def _tokenize(self, text: str) -> List[str]:
+    STOP_WORDS = {
+        "a", "an", "the", "in", "on", "at", "to", "for", "of", "with",
+        "is", "are", "was", "were", "what", "which", "who", "whom",
+        "this", "that", "these", "those", "and", "or", "but", "by", "as"
+    }
+
+    def _tokenize(self, text: str, remove_stopwords: bool = True) -> List[str]:
         clean = re.sub(r"[^\w\s]", " ", text.lower())
-        return [w for w in clean.split() if w]
+        tokens = [w for w in clean.split() if w]
+        if remove_stopwords:
+            return [w for w in tokens if w not in self.STOP_WORDS]
+        return tokens
 
     def _bm25_score(
         self,

@@ -9,6 +9,8 @@ from app.api.v1.auth import router as auth_router
 from app.api.v1.workspaces import router as workspaces_router
 from app.api.v1.documents import router as documents_router
 from app.api.v1.search import router as search_router
+from app.api.v1.research import router as research_router
+from app.api.v1.sessions import router as sessions_router
 
 from contextlib import asynccontextmanager
 
@@ -85,6 +87,8 @@ app.include_router(auth_router)
 app.include_router(workspaces_router)
 app.include_router(documents_router)
 app.include_router(search_router)
+app.include_router(research_router)
+app.include_router(sessions_router)
 
 @app.get("/")
 def root():
