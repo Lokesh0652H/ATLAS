@@ -1,4 +1,4 @@
-# ATLAS — Ultra-Luxury AI Research & Knowledge Engine
+# ATLAS — AI Research & Knowledge Engine
 
 > **Every answer traceable to evidence. Every metric measurable. Every limitation visible.**
 
