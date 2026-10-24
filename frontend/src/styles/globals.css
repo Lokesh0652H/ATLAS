@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --canvas: #F8F5EF;
+  --surface: #FFFEFB;
+  --surface-secondary: #F2EEE6;
+  --primary-ink: #202522;
+  --secondary-ink: #77766F;
+  --muted-ink: #98948A;
+  --border: #E8E1D6;
+  --champagne: #B49A70;
+  --champagne-hover: #947B53;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--primary-ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.font-serif {
+  font-family: 'Instrument Serif', Georgia, serif;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', Menlo, monospace;
+}
+
+/* Custom delicate scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E8E1D6;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B49A70;
+}
+
+/* Subtle glow effects */
+.champagne-glow {
+  box-shadow: 0 0 35px -5px rgba(180, 154, 112, 0.25);
+}
+
+.subtle-ring {
+  box-shadow: 0 0 0 1px rgba(232, 225, 214, 0.8), 0 2px 8px -2px rgba(32, 37, 34, 0.04);
+}
