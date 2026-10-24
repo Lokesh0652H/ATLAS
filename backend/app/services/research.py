@@ -3,8 +3,9 @@ import json
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from app.models.research import ResearchSession, ResearchMessage, Citation
-from app.services.search import search_service
+from app.services.search import search_service, SearchPassage
 from app.services.llm import llm_service
+from app.services.web_search import web_search_service
 
 class ResearchOrchestrator:
     def execute_research(
@@ -19,20 +20,44 @@ class ResearchOrchestrator:
     ) -> ResearchSession:
         """
         Execute end-to-end evidence-grounded research pipeline:
-        1. Retrieve relevant passages
+        1. Retrieve document and/or live web passages
         2. Ground answer and citations
         3. Persist session, user question, assistant answer, and citations
         """
         start_time = time.time()
+        passages = []
+        search_latency = 0.0
 
-        # Step 1: Retrieve passages
-        passages, search_latency = search_service.search(
-            db=db,
-            workspace_id=workspace_id,
-            query=question,
-            mode=retrieval_mode,
-            limit=8
-        )
+        # Step 1A: Retrieve document passages if requested
+        if source_scope in ["workspace", "hybrid", "all"]:
+            doc_passages, search_latency = search_service.search(
+                db=db,
+                workspace_id=workspace_id,
+                query=question,
+                mode=retrieval_mode,
+                limit=8
+            )
+            passages.extend(doc_passages)
+
+        # Step 1B: Retrieve live web passages if requested
+        web_source_map = {}
+        if source_scope in ["web", "hybrid", "all"]:
+            web_results = web_search_service.search_web(query=question, max_results=4)
+            for idx, wr in enumerate(web_results):
+                chunk_id = f"web_{idx}_{int(time.time())}"
+                p = SearchPassage(
+                    chunk_id=chunk_id,
+                    document_id="web",
+                    document_title=wr["title"],
+                    content=wr["snippet"],
+                    score=0.85 - (idx * 0.1),
+                    keyword_score=None,
+                    vector_score=None,
+                    page_number=None,
+                    section_heading="Web Search Result"
+                )
+                web_source_map[chunk_id] = wr["url"]
+                passages.append(p)
 
         # Step 2: Synthesize grounded response
         grounded = llm_service.generate_grounded_answer(
@@ -87,6 +112,7 @@ class ResearchOrchestrator:
             latency_ms=total_latency_ms,
             evidence_metadata=json.dumps({
                 "passages_retrieved": len(passages),
+                "source_scope": source_scope,
                 "search_latency_ms": search_latency,
                 "contradiction_notes": grounded.contradiction_notes
             })
@@ -96,13 +122,17 @@ class ResearchOrchestrator:
 
         # Add citations
         for c in grounded.citations:
+            chunk_id = c.get("chunk_id")
+            is_web = chunk_id in web_source_map or (chunk_id and str(chunk_id).startswith("web_"))
+            source_url = web_source_map.get(chunk_id)
+
             citation_rec = Citation(
                 message_id=assistant_msg.id,
-                chunk_id=c.get("chunk_id"),
+                chunk_id=chunk_id if not is_web else None,
                 citation_number=c["citation_number"],
-                source_type=c["source_type"],
+                source_type="web" if is_web else "document",
                 source_title=c["source_title"],
-                source_url=c.get("source_url"),
+                source_url=source_url,
                 page_number=c.get("page_number"),
                 section_heading=c.get("section_heading"),
                 excerpt=c["excerpt"],
