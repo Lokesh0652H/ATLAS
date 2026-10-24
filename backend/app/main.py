@@ -5,6 +5,8 @@ from app.config import settings
 from app.database import init_db, SessionLocal
 from app.models.telemetry import TelemetryEvent
 from app.api.v1.health import router as health_router
+from app.api.v1.auth import router as auth_router
+from app.api.v1.workspaces import router as workspaces_router
 
 from contextlib import asynccontextmanager
 
@@ -75,8 +77,10 @@ async def telemetry_middleware(request: Request, call_next):
 
 
 
-# Mount health routes
+# Mount routes
 app.include_router(health_router)
+app.include_router(auth_router)
+app.include_router(workspaces_router)
 
 @app.get("/")
 def root():
