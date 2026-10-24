@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, HTTPException, Query, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from sqlalchemy import select
@@ -36,6 +36,15 @@ def get_current_user(
             detail="Inactive user account"
         )
     return user
+
+def get_current_user_flexible(
+    token_header: Optional[str] = Depends(oauth2_scheme),
+    token_query: Optional[str] = Query(None, alias="token"),
+    db: Session = Depends(get_db)
+) -> User:
+    """Validate JWT token from either Authorization header or query parameter for file downloads."""
+    token = token_header or token_query
+    return get_current_user(token=token, db=db)
 
 def require_workspace_access(
     workspace_id: str,

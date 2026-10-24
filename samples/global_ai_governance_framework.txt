@@ -1,0 +1,56 @@
+GLOBAL ARTIFICIAL INTELLIGENCE REGULATORY & RISK MANAGEMENT BRIEFING
+Document Reference: REG-AI-2025-V4
+Classification: Public Regulatory Guidance
+Date of Issue: November 2025
+
+1. EXECUTIVE SUMMARY
+As frontier foundation models approach multi-modal autonomy and human-parity reasoning across software engineering, biology, and cybersecurity, global regulatory bodies have instituted mandatory compliance architectures. This briefing synthesizes the operational requirements established by the European Union Artificial Intelligence Act (EU AI Act, Regulation 2024/1689) and United States Presidential Executive Order 14110.
+
+2. EUROPEAN UNION ARTIFICIAL INTELLIGENCE ACT (EU AI ACT)
+The EU AI Act introduces a risk-proportionate categorization framework dividing AI systems into four discrete classifications:
+
+Category A: Unacceptable Risk (Prohibited Systems)
+- Cognitive behavioral manipulation targeting vulnerable demographics.
+- Untargeted scraping of facial images from CCTV or the internet to populate facial recognition databases.
+- Social scoring systems evaluating natural persons over time based on social behavior or personality traits.
+- Biometric categorization systems that infer sensitive attributes (race, political beliefs, trade union membership, religious beliefs).
+
+Category B: High-Risk AI Systems
+High-risk systems are subject to stringent pre-market conformity assessments and continuous life-cycle monitoring:
+- Critical infrastructure (water, gas, electricity distribution, digital communications).
+- Educational and vocational training access assessments.
+- Employment, worker management, and access to self-employment (automated candidate screening).
+- Essential public and private services (credit scoring, health and life insurance risk modeling).
+- Law enforcement and border control management.
+High-risk systems require:
+1. Systematic risk management and continuous logging.
+2. High-quality training and testing datasets free from structural bias.
+3. Detailed technical documentation and post-market surveillance.
+4. Comprehensive human oversight capabilities ("human-in-the-loop").
+5. Cybersecurity resilience against adversarial perturbations and data poisoning.
+
+Category C: General-Purpose AI (GPAI) Models
+For foundation models with high general capabilities:
+- Standard GPAI: Requires technical documentation, copyright compliance policies, and public training data summaries.
+- GPAI with Systemic Risk: Defined by cumulative compute thresholds exceeding 10^25 FLOPs during training. Developers must conduct red-teaming, adversarial evaluations, report serious cybersecurity incidents, and guarantee adequate energy efficiency tracking.
+
+3. UNITED STATES EXECUTIVE ORDER 14110 & NIST AI RMF
+Executive Order 14110 on the Safe, Secure, and Trustworthy Development and Use of Artificial Intelligence establishes federal reporting mandates under the Defense Production Act (DPA):
+
+Reporting Thresholds:
+1. Dual-Use Foundation Models: Any model trained using a quantity of computing power greater than 10^26 integer or floating-point operations (FLOPs).
+2. Biological Foundation Models: Any model primarily trained using biological sequence data using a computing threshold greater than 10^23 FLOPs.
+3. High-Capacity Computing Clusters: Any computing cluster having a total capacity greater than 10^20 operations per second, with network bandwidth greater than 100 Gbit/s.
+
+NIST AI Risk Management Framework (AI RMF 1.0):
+Voluntary framework structured into four core functions:
+- GOVERN: Fosters a risk-aware culture, transparency, and clear legal accountability.
+- MAP: Identifies context-specific risks, dependencies, and business constraints.
+- MEASURE: Employs quantitative evaluation metrics, benchmark datasets, and red-teaming to track performance and robustness.
+- MANAGE: Allocates risk mitigation resources, incident response playbooks, and continuous model deprecation schedules.
+
+4. COMPLIANCE TIMELINE & ENFORCEMENT PENALTIES
+- Prohibited AI practices enforceable from February 2, 2025.
+- General-Purpose AI governance obligations enforceable from August 2, 2025.
+- Full high-risk system obligations enforceable from August 2, 2026.
+Maximum financial penalties under the EU AI Act reach €35,000,000 or up to 7% of total worldwide annual turnover for prohibited practice violations, and €15,000,000 or 3% for general non-compliance.

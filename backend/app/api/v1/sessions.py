@@ -6,7 +6,7 @@ from app.database import get_db
 from app.models.user import User
 from app.models.research import ResearchSession, ResearchMessage, Citation
 from app.schemas.research import ResearchSessionOut
-from app.api.deps import get_current_user, require_workspace_access
+from app.api.deps import get_current_user, get_current_user_flexible, require_workspace_access
 
 router = APIRouter(prefix="/api/v1/sessions", tags=["Research History"])
 
@@ -58,7 +58,7 @@ def delete_session(
 @router.get("/{session_id}/export")
 def export_session_markdown(
     session_id: str,
-    current_user: User = Depends(get_current_user),
+    current_user: User = Depends(get_current_user_flexible),
     db: Session = Depends(get_db)
 ):
     """Export research report to authentic Markdown with citations and provenance."""

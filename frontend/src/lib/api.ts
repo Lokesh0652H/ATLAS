@@ -132,6 +132,28 @@ export const api = {
     });
   },
 
+  async downloadReport(sessionId: string): Promise<void> {
+    const token = typeof window !== "undefined" ? localStorage.getItem("atlas_token") : null;
+    const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
+
+    const url = `${API_BASE_URL}/api/v1/sessions/${sessionId}/export?token=${encodeURIComponent(token || "")}`;
+    const res = await fetch(url, { headers });
+
+    if (!res.ok) {
+      throw new Error(`Export failed: ${res.statusText}`);
+    }
+
+    const blob = await res.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = blobUrl;
+    a.download = `atlas_report_${sessionId.slice(0, 8)}.md`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(blobUrl);
+    document.body.removeChild(a);
+  },
+
   // Observability & Telemetry
   async getObservability(): Promise<any> {
     return request("/api/v1/observability");

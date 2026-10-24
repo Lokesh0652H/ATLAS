@@ -103,14 +103,19 @@ export default function HistoryPage() {
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
-                <a
-                  href={`/api/v1/sessions/${s.id}/export`}
-                  target="_blank"
-                  className="p-2 text-ink-secondary hover:text-ink-primary hover:bg-surface-secondary rounded-lg transition-colors"
+                <button
+                  onClick={async () => {
+                    try {
+                      await api.downloadReport(s.id);
+                    } catch (err: any) {
+                      alert(`Export failed: ${err.message}`);
+                    }
+                  }}
+                  className="p-2 text-ink-secondary hover:text-ink-primary hover:bg-surface-secondary rounded-lg transition-colors cursor-pointer"
                   title="Export Markdown Report"
                 >
                   <Download className="w-4 h-4 text-champagne" />
-                </a>
+                </button>
 
                 <Link
                   href={`/research?session=${s.id}`}

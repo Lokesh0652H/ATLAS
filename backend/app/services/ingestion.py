@@ -62,6 +62,16 @@ def process_document_pipeline(document_id: str):
             all_chunks.extend(sec_chunks)
             chunk_idx += len(sec_chunks)
 
+        if not all_chunks:
+            doc.processing_status = "failed"
+            doc.error_message = "No readable text extracted. The document may be an image-only or scanned PDF without an embedded text layer."
+            job.status = "failed"
+            job.stage = "error"
+            job.error_message = doc.error_message
+            db.commit()
+            logger.warning(f"Document {document_id} had 0 chunks extracted. Marked as failed.")
+            return
+
         job.stage = "embedding"
         job.progress_percent = 70
         doc.processing_status = "embedding"

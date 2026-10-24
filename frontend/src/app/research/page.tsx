@@ -58,10 +58,13 @@ function ResearchContent() {
     }
   };
 
-  const handleExport = () => {
+  const handleExport = async () => {
     if (!session) return;
-    const token = typeof window !== "undefined" ? localStorage.getItem("atlas_token") : "";
-    window.open(`/api/v1/sessions/${session.id}/export`, "_blank");
+    try {
+      await api.downloadReport(session.id);
+    } catch (err: any) {
+      alert(`Export failed: ${err.message}`);
+    }
   };
 
   return (
